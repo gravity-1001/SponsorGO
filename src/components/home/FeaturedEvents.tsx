@@ -2,52 +2,60 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, MapPin, Users, IndianRupee } from "lucide-react";
 
 const events = [
   {
     id: 1,
-    title: "TechHacks 2025",
-    category: "Hackathon",
-    university: "Stanford University",
-    location: "Palo Alto, CA",
-    date: "May 15-17, 2025",
-    attendees: 500,
+    title: "Alegria 2025",
+    category: "Cultural Festival",
+    university: "Pillai HOC College of Engineering",
+    location: "Mumbai, Maharashtra",
+    date: "March 15-17, 2025",
+    attendees: 5000,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 10000,
+    sponsorshipAmount: 250000,
   },
   {
     id: 2,
-    title: "Business Summit",
-    category: "Conference",
-    university: "Harvard Business School",
-    location: "Boston, MA",
-    date: "June 5-6, 2025",
-    attendees: 300,
+    title: "Algorithm 10.0",
+    category: "Technical Symposium",
+    university: "Kalsekar Technical Campus",
+    location: "Navi Mumbai, Maharashtra",
+    date: "April 22-23, 2025",
+    attendees: 3000,
     image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 7500,
+    sponsorshipAmount: 180000,
   },
   {
     id: 3,
-    title: "Design Expo",
-    category: "Exhibition",
-    university: "Rhode Island School of Design",
-    location: "Providence, RI",
-    date: "July 12, 2025",
-    attendees: 250,
+    title: "Mood Indigo",
+    category: "Cultural Festival",
+    university: "IIT Bombay",
+    location: "Mumbai, Maharashtra",
+    date: "December 20-23, 2025",
+    attendees: 80000,
     image: "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 5000,
+    sponsorshipAmount: 1500000,
   },
 ];
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(amount);
+};
 
 const FeaturedEvents = () => {
   return (
     <section className="section-padding bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Events Seeking Sponsors</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured College Events Seeking Sponsors</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Discover top college events looking for sponsorships and make impactful connections with the next generation of professionals.
+            Discover top college events across India looking for sponsorships and make impactful connections with the next generation of professionals.
           </p>
         </div>
         
@@ -68,7 +76,10 @@ const FeaturedEvents = () => {
                       {event.category}
                     </Badge>
                     <div className="text-right">
-                      <span className="block text-sponsorgo-purple font-bold">${event.sponsorshipAmount.toLocaleString()}</span>
+                      <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
+                        <IndianRupee className="h-4 w-4 mr-1" />
+                        {event.sponsorshipAmount.toLocaleString('en-IN')}
+                      </span>
                       <span className="text-xs text-gray-500">Sponsorship</span>
                     </div>
                   </div>
@@ -86,7 +97,7 @@ const FeaturedEvents = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-sponsorgo-purple" />
-                      <span>{event.attendees} Expected Attendees</span>
+                      <span>{event.attendees.toLocaleString('en-IN')} Expected Attendees</span>
                     </div>
                   </div>
                 </CardContent>

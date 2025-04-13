@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -18,7 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle, Eye } from "lucide-react";
+import { CheckCircle, XCircle, Eye, IndianRupee } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 
@@ -26,23 +25,23 @@ import { Link } from "react-router-dom";
 const mockPendingEvents = [
   {
     id: "1",
-    name: "Tech Hackathon 2025",
-    organizer: "MIT Tech Club",
-    date: "2025-05-10",
+    name: "Alegria 2025",
+    organizer: "Pillai HOC College of Engineering",
+    date: "2025-03-15",
     status: "pending",
   },
   {
     id: "2",
-    name: "Science Fair Expo",
-    organizer: "Stanford Science Association",
-    date: "2025-06-15",
+    name: "Algorithm 10.0",
+    organizer: "Kalsekar Technical Campus",
+    date: "2025-04-22",
     status: "pending",
   },
   {
     id: "3",
-    name: "Design Competition",
-    organizer: "RISD Student Council",
-    date: "2025-04-30",
+    name: "Technovanza",
+    organizer: "VJTI Mumbai",
+    date: "2025-02-28",
     status: "pending",
   },
 ];
@@ -114,7 +113,7 @@ const ReviewEventsPage = () => {
           <CardHeader>
             <CardTitle className="text-3xl font-bold">Review Events</CardTitle>
             <CardDescription>
-              Review and approve events submitted by organizers.
+              Review and approve events submitted by colleges across India.
             </CardDescription>
           </CardHeader>
           <CardContent>

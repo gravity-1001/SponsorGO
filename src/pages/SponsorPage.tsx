@@ -6,57 +6,57 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users, Search, ChevronDown, Filter, CheckCircle } from "lucide-react";
+import { Calendar, MapPin, Users, Search, ChevronDown, Filter, CheckCircle, IndianRupee } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const featureEvents = [
   {
     id: 1,
-    title: "TechHacks 2025",
-    category: "Hackathon",
-    university: "Stanford University",
-    location: "Palo Alto, CA",
-    date: "May 15-17, 2025",
-    attendees: 500,
+    title: "Alegria 2025",
+    category: "Cultural Festival",
+    university: "Pillai HOC College of Engineering",
+    location: "Mumbai, Maharashtra",
+    date: "March 15-17, 2025",
+    attendees: 5000,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 10000,
+    sponsorshipAmount: 250000,
     featured: true
   },
   {
     id: 2,
-    title: "Business Summit",
-    category: "Conference",
-    university: "Harvard Business School",
-    location: "Boston, MA",
-    date: "June 5-6, 2025",
-    attendees: 300,
+    title: "Algorithm 10.0",
+    category: "Technical Symposium",
+    university: "Kalsekar Technical Campus",
+    location: "Navi Mumbai, Maharashtra",
+    date: "April 22-23, 2025",
+    attendees: 3000,
     image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 7500,
+    sponsorshipAmount: 180000,
     featured: true
   }
 ];
 
 const testimonials = [
   {
-    quote: "Sponsoring the MIT Hackathon through SponsorGO was the best decision we made. We were able to connect with incredible talent and showcase our API to hundreds of students.",
-    name: "Michael Chen",
-    role: "Developer Relations Lead",
-    company: "TechCorp",
-    avatar: "MC"
+    quote: "Sponsoring the IIT Bombay Techfest through SponsorGO was the best decision we made. We were able to connect with incredible talent and showcase our products to thousands of students.",
+    name: "Rohit Sharma",
+    role: "Marketing Head",
+    company: "TechIndia Solutions",
+    avatar: "RS"
   },
   {
     quote: "The platform made it incredibly easy to find and support relevant college events. We've been able to build relationships with engineering departments across the country.",
-    name: "Sarah Johnson",
+    name: "Priya Patel",
     role: "University Outreach Manager",
-    company: "Innovate Inc.",
-    avatar: "SJ"
+    company: "Innovate India",
+    avatar: "PP"
   },
   {
     quote: "What I love about SponsorGO is how it streamlines the entire sponsorship process. From discovery to payment to post-event analytics, everything is in one place.",
-    name: "David Rodriguez",
+    name: "Vikram Singh",
     role: "Marketing Director",
-    company: "Future Labs",
-    avatar: "DR"
+    company: "Future Labs India",
+    avatar: "VS"
   }
 ];
 
@@ -67,7 +67,7 @@ const benefits = [
   },
   {
     title: "Brand Visibility",
-    description: "Get your brand in front of thousands of college students and establish your company as an industry leader."
+    description: "Get your brand in front of thousands of college students across India and establish your company as an industry leader."
   },
   {
     title: "Product Showcasing",
@@ -79,13 +79,21 @@ const benefits = [
   },
   {
     title: "Social Impact",
-    description: "Support educational initiatives and make a positive impact on the student community."
+    description: "Support educational initiatives and make a positive impact on the student community across India."
   },
   {
     title: "Market Research",
-    description: "Gain valuable insights into how Gen Z interacts with your products and what they're looking for."
+    description: "Gain valuable insights into how Gen Z in India interacts with your products and what they're looking for."
   }
 ];
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(amount);
+};
 
 const SponsorPage = () => {
   return (
@@ -98,10 +106,10 @@ const SponsorPage = () => {
                 For Sponsors
               </Badge>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                Connect Your Brand with College Events That Matter
+                Connect Your Brand with Indian College Events
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                Discover and sponsor college events that align with your brand values. From hackathons to business competitions, find the perfect opportunities to connect with the next generation of professionals.
+                Discover and sponsor college events across India that align with your brand values. From cultural festivals to technical symposiums, find the perfect opportunities to connect with the next generation of professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/events">
@@ -125,7 +133,7 @@ const SponsorPage = () => {
                     className="w-full h-64 object-cover"
                   />
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Why Sponsor College Events?</h3>
+                    <h3 className="text-xl font-bold mb-2">Why Sponsor Indian College Events?</h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
@@ -137,7 +145,7 @@ const SponsorPage = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
-                        <span>Recruit top talent directly from colleges</span>
+                        <span>Recruit top talent directly from top colleges</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
@@ -190,7 +198,10 @@ const SponsorPage = () => {
                         {event.category}
                       </Badge>
                       <div className="text-right">
-                        <span className="block text-sponsorgo-purple font-bold">${event.sponsorshipAmount.toLocaleString()}</span>
+                        <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
+                          <IndianRupee className="h-4 w-4 mr-1" />
+                          {event.sponsorshipAmount.toLocaleString('en-IN')}
+                        </span>
                         <span className="text-xs text-gray-500">Sponsorship</span>
                       </div>
                     </div>
@@ -208,7 +219,7 @@ const SponsorPage = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-sponsorgo-purple" />
-                        <span>{event.attendees} Expected Attendees</span>
+                        <span>{event.attendees.toLocaleString('en-IN')} Expected Attendees</span>
                       </div>
                     </div>
                     
@@ -297,7 +308,7 @@ const SponsorPage = () => {
       
       <section className="bg-sponsorgo-purple text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Connect with College Events?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Connect with Indian College Events?</h2>
           <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto">
             Start browsing events that align with your brand values and connect with the next generation of professionals.
           </p>

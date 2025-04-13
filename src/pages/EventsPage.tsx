@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -9,97 +8,97 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Calendar, MapPin, Users, Search, Filter } from "lucide-react";
+import { Calendar, MapPin, Users, Search, Filter, IndianRupee } from "lucide-react";
 
 const events = [
   {
     id: 1,
-    title: "TechHacks 2025",
-    category: "Hackathon",
-    university: "Stanford University",
-    location: "Palo Alto, CA",
-    date: "May 15-17, 2025",
-    attendees: 500,
+    title: "Alegria 2025",
+    category: "Cultural Festival",
+    university: "Pillai HOC College of Engineering",
+    location: "Mumbai, Maharashtra",
+    date: "March 15-17, 2025",
+    attendees: 5000,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 10000,
-    description: "A 48-hour hackathon challenging students to build innovative solutions for real-world problems. Sponsored by top tech companies with mentorship opportunities."
+    sponsorshipAmount: 250000,
+    description: "Alegria is the annual cultural festival of Pillai HOC College of Engineering. Join us for three days of music, dance, art and technology competitions with participation from colleges across India."
   },
   {
     id: 2,
-    title: "Business Summit",
-    category: "Conference",
-    university: "Harvard Business School",
-    location: "Boston, MA",
-    date: "June 5-6, 2025",
-    attendees: 300,
+    title: "Algorithm 10.0",
+    category: "Technical Symposium",
+    university: "Kalsekar Technical Campus",
+    location: "Navi Mumbai, Maharashtra",
+    date: "April 22-23, 2025",
+    attendees: 3000,
     image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 7500,
-    description: "Annual business conference bringing together industry leaders and students to discuss emerging trends and opportunities in the global market."
+    sponsorshipAmount: 180000,
+    description: "A national level technical symposium featuring coding competitions, paper presentations, robotics workshops and industry expert talks. Great opportunity to connect with engineering talent."
   },
   {
     id: 3,
-    title: "Design Expo",
-    category: "Exhibition",
-    university: "Rhode Island School of Design",
-    location: "Providence, RI",
-    date: "July 12, 2025",
-    attendees: 250,
+    title: "Technovanza",
+    category: "Technical Festival",
+    university: "VJTI Mumbai",
+    location: "Mumbai, Maharashtra",
+    date: "February 28-March 2, 2025",
+    attendees: 7000,
     image: "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 5000,
-    description: "Showcase of student design projects spanning industrial design, graphic design, architecture, and digital media. Great opportunity to scout emerging talent."
+    sponsorshipAmount: 350000,
+    description: "VJTI's annual technical festival bringing together brilliant minds from across the country to showcase their technical expertise through competitions, exhibitions and workshops."
   },
   {
     id: 4,
-    title: "AI & ML Symposium",
-    category: "Symposium",
-    university: "MIT",
-    location: "Cambridge, MA",
-    date: "August 22-24, 2025",
-    attendees: 400,
+    title: "Mood Indigo",
+    category: "Cultural Festival",
+    university: "IIT Bombay",
+    location: "Mumbai, Maharashtra",
+    date: "December 20-23, 2025",
+    attendees: 80000,
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 15000,
-    description: "A three-day symposium focused on recent advancements in artificial intelligence and machine learning with keynotes from leading researchers in the field."
+    sponsorshipAmount: 1500000,
+    description: "Asia's largest college cultural festival featuring performances by renowned artists, competitions in diverse fields, and participation from over 200 colleges nationwide."
   },
   {
     id: 5,
-    title: "College Film Festival",
-    category: "Festival",
-    university: "NYU Tisch School of the Arts",
-    location: "New York, NY",
-    date: "September 18-20, 2025",
-    attendees: 600,
+    title: "Kshitij",
+    category: "Technical Festival",
+    university: "IIT Kharagpur",
+    location: "Kharagpur, West Bengal",
+    date: "January 18-20, 2025",
+    attendees: 60000,
     image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 8000,
-    description: "Annual showcase of student films from one of the top film schools in the country, featuring screenings, workshops, and networking events with industry professionals."
+    sponsorshipAmount: 800000,
+    description: "Kshitij is the annual techno-management fest of IIT Kharagpur featuring robotics competitions, hackathons, and research showcases from students across the country."
   },
   {
     id: 6,
-    title: "Engineering Fair",
-    category: "Fair",
-    university: "Georgia Tech",
-    location: "Atlanta, GA",
-    date: "October 5, 2025",
-    attendees: 350,
+    title: "Rendezvous",
+    category: "Cultural Festival",
+    university: "IIT Delhi",
+    location: "New Delhi, Delhi",
+    date: "October 15-18, 2025",
+    attendees: 75000,
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&auto=format&fit=crop&q=90",
-    sponsorshipAmount: 6000,
-    description: "Exhibition of innovative engineering projects across electrical, mechanical, civil, and computer engineering disciplines with opportunities for student recruitment."
+    sponsorshipAmount: 1200000,
+    description: "Rendezvous is IIT Delhi's annual cultural festival featuring performances, competitions, exhibitions and workshops across various artistic and cultural domains."
   }
 ];
 
 const categories = [
-  "All Categories", "Hackathon", "Conference", "Exhibition", "Symposium", "Festival", "Fair"
+  "All Categories", "Technical Festival", "Cultural Festival", "Technical Symposium", "Hackathon", "Conference", "Exhibition"
 ];
 
 const locations = [
-  "All Locations", "Palo Alto, CA", "Boston, MA", "Providence, RI", "Cambridge, MA", "New York, NY", "Atlanta, GA"
+  "All Locations", "Mumbai, Maharashtra", "New Delhi, Delhi", "Bangalore, Karnataka", "Chennai, Tamil Nadu", "Kharagpur, West Bengal", "Navi Mumbai, Maharashtra"
 ];
 
 const EventsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All Categories");
   const [locationFilter, setLocationFilter] = useState("All Locations");
-  const [budgetRange, setBudgetRange] = useState([0, 20000]);
-  const [attendeeRange, setAttendeeRange] = useState([0, 1000]);
+  const [budgetRange, setBudgetRange] = useState([0, 2000000]);
+  const [attendeeRange, setAttendeeRange] = useState([0, 100000]);
   const [mobileFiltersVisible, setMobileFiltersVisible] = useState(false);
 
   const filteredEvents = events.filter(event => {
@@ -115,14 +114,22 @@ const EventsPage = () => {
     return matchesSearch && matchesCategory && matchesLocation && matchesBudget && matchesAttendees;
   });
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
   return (
     <MainLayout>
       <div className="bg-gradient-to-b from-sponsorgo-purple-light/30 to-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold mb-4">Find Events to Sponsor</h1>
+            <h1 className="text-4xl font-bold mb-4">Find College Events to Sponsor</h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Discover college events that align with your brand and connect with the next generation of professionals.
+              Discover top college events across India that align with your brand and connect with the next generation of professionals.
             </p>
           </div>
           
@@ -220,14 +227,14 @@ const EventsPage = () => {
                   <div className="flex justify-between mb-1">
                     <Label>Budget Range</Label>
                     <span className="text-sm">
-                      ${budgetRange[0].toLocaleString()} - ${budgetRange[1].toLocaleString()}
+                      {formatCurrency(budgetRange[0])} - {formatCurrency(budgetRange[1])}
                     </span>
                   </div>
                   <Slider
                     value={budgetRange}
                     min={0}
-                    max={20000}
-                    step={500}
+                    max={2000000}
+                    step={50000}
                     onValueChange={setBudgetRange}
                     className="mt-2"
                   />
@@ -243,7 +250,7 @@ const EventsPage = () => {
                   <Slider
                     value={attendeeRange}
                     min={0}
-                    max={1000}
+                    max={100000}
                     step={50}
                     onValueChange={setAttendeeRange}
                     className="mt-2"
@@ -302,14 +309,14 @@ const EventsPage = () => {
                   <div className="flex justify-between mb-2">
                     <Label>Budget Range</Label>
                     <span className="text-sm">
-                      ${budgetRange[0].toLocaleString()} - ${budgetRange[1].toLocaleString()}
+                      {formatCurrency(budgetRange[0])} - {formatCurrency(budgetRange[1])}
                     </span>
                   </div>
                   <Slider
                     value={budgetRange}
                     min={0}
-                    max={20000}
-                    step={500}
+                    max={2000000}
+                    step={50000}
                     onValueChange={setBudgetRange}
                   />
                 </div>
@@ -324,7 +331,7 @@ const EventsPage = () => {
                   <Slider
                     value={attendeeRange}
                     min={0}
-                    max={1000}
+                    max={100000}
                     step={50}
                     onValueChange={setAttendeeRange}
                   />
@@ -374,7 +381,10 @@ const EventsPage = () => {
                           {event.category}
                         </Badge>
                         <div className="text-right">
-                          <span className="block text-sponsorgo-purple font-bold">${event.sponsorshipAmount.toLocaleString()}</span>
+                          <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
+                            <IndianRupee className="h-4 w-4 mr-1" />
+                            {event.sponsorshipAmount.toLocaleString('en-IN')}
+                          </span>
                           <span className="text-xs text-gray-500">Sponsorship</span>
                         </div>
                       </div>
@@ -394,7 +404,7 @@ const EventsPage = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4 text-sponsorgo-purple" />
-                          <span>{event.attendees} Expected Attendees</span>
+                          <span>{event.attendees.toLocaleString('en-IN')} Expected Attendees</span>
                         </div>
                       </div>
                     </CardContent>
@@ -414,8 +424,8 @@ const EventsPage = () => {
                     setSearchTerm("");
                     setCategoryFilter("All Categories");
                     setLocationFilter("All Locations");
-                    setBudgetRange([0, 20000]);
-                    setAttendeeRange([0, 1000]);
+                    setBudgetRange([0, 2000000]);
+                    setAttendeeRange([0, 100000]);
                   }}
                 >
                   Clear All Filters

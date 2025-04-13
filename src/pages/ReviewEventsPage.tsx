@@ -47,15 +47,6 @@ const mockPendingEvents = [
   },
 ];
 
-// In a real app with authentication, this would come from your auth system
-const getCurrentUser = () => {
-  // For demo purposes, let's just check if there's an admin flag in localStorage
-  // In a real app with proper authentication, this would be based on the user's authenticated status
-  return {
-    isAdmin: localStorage.getItem("isAdmin") === "true",
-  };
-};
-
 const ReviewEventsPage = () => {
   const [pendingEvents, setPendingEvents] = useState(mockPendingEvents);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -64,7 +55,8 @@ const ReviewEventsPage = () => {
   useEffect(() => {
     document.title = "Review Events | SponsorGO";
     // Check if the current user is an admin
-    const userIsAdmin = getCurrentUser().isAdmin;
+    const userIsAdmin = localStorage.getItem("isAdmin") === "true";
+    console.log("ReviewEventsPage: Initial admin check:", userIsAdmin);
     setIsAdmin(userIsAdmin);
     
     // Show access denied toast if not admin
@@ -100,9 +92,10 @@ const ReviewEventsPage = () => {
   // If the user is not an admin, redirect them to the home page
   if (!isAdmin) {
     console.log("User is not admin, redirecting to home page");
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace />;
   }
 
+  console.log("Rendering ReviewEventsPage content for admin user");
   return (
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

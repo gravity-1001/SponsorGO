@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -21,33 +22,17 @@ import { CheckCircle, XCircle, Eye, IndianRupee } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 
-// Mock data for pending events - in a real app, this would come from your database
-const mockPendingEvents = [
-  {
-    id: "1",
-    name: "Alegria 2025",
-    organizer: "Pillai HOC College of Engineering",
-    date: "2025-03-15",
-    status: "pending",
-  },
-  {
-    id: "2",
-    name: "Algorithm 10.0",
-    organizer: "Kalsekar Technical Campus",
-    date: "2025-04-22",
-    status: "pending",
-  },
-  {
-    id: "3",
-    name: "Technovanza",
-    organizer: "VJTI Mumbai",
-    date: "2025-02-28",
-    status: "pending",
-  },
-];
+// Interface for event objects
+interface Event {
+  id: string;
+  name: string;
+  organizer: string; 
+  date: string;
+  status: string;
+}
 
 const ReviewEventsPage = () => {
-  const [pendingEvents, setPendingEvents] = useState(mockPendingEvents);
+  const [pendingEvents, setPendingEvents] = useState<Event[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -61,6 +46,49 @@ const ReviewEventsPage = () => {
     
     // Set the admin status
     setIsAdmin(userIsAdmin);
+    
+    // Get submitted events from local storage
+    const storedEvents = localStorage.getItem("pendingEvents");
+    let eventsArray: Event[] = [];
+    
+    if (storedEvents) {
+      try {
+        eventsArray = JSON.parse(storedEvents);
+        console.log("Loaded pending events from storage:", eventsArray);
+      } catch (error) {
+        console.error("Error parsing stored events:", error);
+      }
+    }
+    
+    // If no stored events or empty array, use mock data as fallback
+    if (!eventsArray || eventsArray.length === 0) {
+      console.log("Using mock data for pending events");
+      eventsArray = [
+        {
+          id: "1",
+          name: "Alegria 2025",
+          organizer: "Pillai HOC College of Engineering",
+          date: "2025-03-15",
+          status: "pending",
+        },
+        {
+          id: "2",
+          name: "Algorithm 10.0",
+          organizer: "Kalsekar Technical Campus",
+          date: "2025-04-22",
+          status: "pending",
+        },
+        {
+          id: "3",
+          name: "Technovanza",
+          organizer: "VJTI Mumbai",
+          date: "2025-02-28",
+          status: "pending",
+        },
+      ];
+    }
+    
+    setPendingEvents(eventsArray);
     setLoading(false);
     
     // Show access denied toast if not admin
@@ -76,8 +104,13 @@ const ReviewEventsPage = () => {
   }, [toast]);
 
   const handleApprove = (id: string) => {
-    // In a real app, you would call your API to approve the event
-    setPendingEvents(pendingEvents.filter(event => event.id !== id));
+    // Remove the event from pending events
+    const updatedEvents = pendingEvents.filter(event => event.id !== id);
+    setPendingEvents(updatedEvents);
+    
+    // Update local storage
+    localStorage.setItem("pendingEvents", JSON.stringify(updatedEvents));
+    
     toast({
       title: "Event Approved",
       description: "The event has been approved and is now public.",
@@ -85,8 +118,13 @@ const ReviewEventsPage = () => {
   };
 
   const handleReject = (id: string) => {
-    // In a real app, you would call your API to reject the event
-    setPendingEvents(pendingEvents.filter(event => event.id !== id));
+    // Remove the event from pending events
+    const updatedEvents = pendingEvents.filter(event => event.id !== id);
+    setPendingEvents(updatedEvents);
+    
+    // Update local storage
+    localStorage.setItem("pendingEvents", JSON.stringify(updatedEvents));
+    
     toast({
       title: "Event Rejected",
       description: "The event has been rejected and won't be published.",

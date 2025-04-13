@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -17,13 +16,24 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon, Upload, Info, Plus, Trash2, ArrowRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("");
+  const [university, setUniversity] = useState("");
   const [date, setDate] = useState<Date>();
+  const [expectedAttendees, setExpectedAttendees] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [website, setWebsite] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [sponsorshipGoal, setSponsorshipGoal] = useState("");
+  
   const [images, setImages] = useState<File[]>([]);
   const [formStep, setFormStep] = useState(1);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -36,7 +46,6 @@ const CreateEvent = () => {
         description: `${newFiles.length} image(s) added successfully.`,
       });
       
-      // Reset the input value so the same file can be selected again
       e.target.value = '';
     }
   };
@@ -52,11 +61,48 @@ const CreateEvent = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const newEvent = {
+      id: `event-${Date.now()}`,
+      name: eventName || "TechHacks 2025",
+      organizer: university || "Stanford University",
+      date: date ? format(date, "yyyy-MM-dd") : "2025-05-15",
+      status: "pending",
+      description: description || "A 48-hour hackathon challenging students to build innovative solutions.",
+      attendees: expectedAttendees || "200",
+      venue: location || "Computer Science Building",
+      type: eventType || "Hackathon",
+      website: website || "",
+      contactEmail: contactEmail || "organizers@techhacks.edu",
+      sponsorshipGoal: sponsorshipGoal || "10000",
+      createdAt: new Date().toISOString()
+    };
+    
+    let pendingEvents = [];
+    const storedEvents = localStorage.getItem("pendingEvents");
+    
+    if (storedEvents) {
+      try {
+        pendingEvents = JSON.parse(storedEvents);
+      } catch (error) {
+        console.error("Error parsing stored events:", error);
+      }
+    }
+    
+    pendingEvents.push(newEvent);
+    
+    localStorage.setItem("pendingEvents", JSON.stringify(pendingEvents));
+    
     toast({
       title: "Event submitted for review",
       description: "We've received your event details. Our team will review it and get back to you soon.",
     });
-    // This would normally submit the form to an API
+    
+    localStorage.setItem("isAdmin", "true");
+    
+    setTimeout(() => {
+      navigate("/review-events");
+    }, 1500);
   };
 
   const nextStep = () => {
@@ -83,7 +129,6 @@ const CreateEvent = () => {
       </div>
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Step Indicator */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <div className={`font-semibold ${formStep >= 1 ? 'text-sponsorgo-purple' : 'text-gray-400'}`}>Event Details</div>
@@ -125,13 +170,19 @@ const CreateEvent = () => {
                       id="eventName" 
                       placeholder="e.g., TechHacks 2025" 
                       required 
+                      value={eventName}
+                      onChange={(e) => setEventName(e.target.value)}
                     />
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="eventType">Event Type *</Label>
-                      <Select required>
+                      <Select 
+                        value={eventType} 
+                        onValueChange={setEventType}
+                        required
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Select event type" />
                         </SelectTrigger>
@@ -151,8 +202,10 @@ const CreateEvent = () => {
                       <Label htmlFor="university">University/College *</Label>
                       <Input 
                         id="university" 
-                        placeholder="e.g., Stanford University" 
+                        placeholder="e.g., Kalsekar Technical Campus" 
                         required 
+                        value={university}
+                        onChange={(e) => setUniversity(e.target.value)}
                       />
                     </div>
                   </div>
@@ -193,6 +246,8 @@ const CreateEvent = () => {
                         placeholder="e.g., 200" 
                         min="1" 
                         required 
+                        value={expectedAttendees}
+                        onChange={(e) => setExpectedAttendees(e.target.value)}
                       />
                     </div>
                   </div>
@@ -201,8 +256,10 @@ const CreateEvent = () => {
                     <Label htmlFor="location">Venue/Location *</Label>
                     <Input 
                       id="location" 
-                      placeholder="e.g., Computer Science Building, Stanford University" 
+                      placeholder="e.g., Computer Science Building, Mumbai" 
                       required 
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
                     />
                   </div>
                   
@@ -213,6 +270,8 @@ const CreateEvent = () => {
                       placeholder="Describe your event, its purpose, activities, and why sponsors should be interested..." 
                       rows={6}
                       required 
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                     <p className="text-xs text-gray-500 mt-1">
                       Be specific about what makes your event unique and the value it offers to sponsors.
@@ -226,6 +285,8 @@ const CreateEvent = () => {
                         id="website" 
                         type="url" 
                         placeholder="e.g., https://techhacks-stanford.edu" 
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
                       />
                     </div>
                     
@@ -236,6 +297,8 @@ const CreateEvent = () => {
                         type="email" 
                         placeholder="e.g., organizers@techhacks-stanford.edu" 
                         required 
+                        value={contactEmail}
+                        onChange={(e) => setContactEmail(e.target.value)}
                       />
                     </div>
                   </div>
@@ -326,6 +389,8 @@ const CreateEvent = () => {
                         placeholder="e.g., 10000" 
                         className="pl-10"
                         required 
+                        value={sponsorshipGoal}
+                        onChange={(e) => setSponsorshipGoal(e.target.value)}
                       />
                     </div>
                     <p className="text-xs text-gray-500">

@@ -2,7 +2,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+
+// Extend the Window interface to include our custom function
+declare global {
+  interface Window {
+    setAdminMode: (isAdmin: boolean) => void;
+  }
+}
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +35,7 @@ const Navbar = () => {
   }, []);
 
   // Add this for debugging - you can call this from your browser console with setAdminMode(true)
-  if (typeof window !== 'undefined' && !window.setAdminMode) {
+  if (typeof window !== 'undefined') {
     window.setAdminMode = (isAdmin) => {
       localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
       setIsAdmin(isAdmin);

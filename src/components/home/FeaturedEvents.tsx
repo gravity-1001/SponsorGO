@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Users, IndianRupee } from "lucide-react";
+import { formatIndianCurrency } from "@/lib/utils";
 
 const events = [
   {
@@ -40,14 +41,6 @@ const events = [
   },
 ];
 
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0
-  }).format(amount);
-};
-
 const FeaturedEvents = () => {
   return (
     <section className="section-padding bg-gray-50">
@@ -78,7 +71,7 @@ const FeaturedEvents = () => {
                     <div className="text-right">
                       <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
                         <IndianRupee className="h-4 w-4 mr-1" />
-                        {event.sponsorshipAmount.toLocaleString('en-IN')}
+                        {formatIndianCurrency(event.sponsorshipAmount)}
                       </span>
                       <span className="text-xs text-gray-500">Sponsorship</span>
                     </div>

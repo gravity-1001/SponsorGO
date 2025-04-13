@@ -1,7 +1,8 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, IndianRupee } from 'lucide-react';
+import { formatIndianCurrency } from '@/lib/utils';
 
 const HeroSection = () => {
   return (
@@ -46,7 +47,10 @@ const HeroSection = () => {
                   <p className="text-gray-500">Stanford University</p>
                 </div>
                 <div className="flex flex-col items-end">
-                  <p className="font-bold text-sponsorgo-purple">$5,000</p>
+                  <p className="font-bold text-sponsorgo-purple flex items-center">
+                    <IndianRupee className="h-4 w-4 mr-1" />
+                    5,00,000
+                  </p>
                   <p className="text-sm text-gray-500">Sponsored</p>
                 </div>
               </div>

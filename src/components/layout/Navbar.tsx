@@ -10,8 +10,31 @@ const Navbar = () => {
   
   useEffect(() => {
     // Check if the current user is an admin when the component mounts
-    setIsAdmin(localStorage.getItem("isAdmin") === "true");
+    // and again whenever localStorage changes
+    const checkAdminStatus = () => {
+      setIsAdmin(localStorage.getItem("isAdmin") === "true");
+      console.log("Admin status checked:", localStorage.getItem("isAdmin") === "true");
+    };
+    
+    // Initial check
+    checkAdminStatus();
+    
+    // Listen for storage events (in case admin status changes in another tab)
+    window.addEventListener('storage', checkAdminStatus);
+    
+    return () => {
+      window.removeEventListener('storage', checkAdminStatus);
+    };
   }, []);
+
+  // Add this for debugging - you can call this from your browser console with setAdminMode(true)
+  if (typeof window !== 'undefined' && !window.setAdminMode) {
+    window.setAdminMode = (isAdmin) => {
+      localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
+      setIsAdmin(isAdmin);
+      console.log(`Admin mode ${isAdmin ? 'enabled' : 'disabled'}`);
+    };
+  }
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">

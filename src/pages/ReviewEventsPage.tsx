@@ -76,6 +76,7 @@ const ReviewEventsPage = () => {
       });
     }
     // In a real app, you would fetch pending events from your API here
+    console.log("ReviewEventsPage mounted, admin status:", userIsAdmin);
   }, [toast]);
 
   const handleApprove = (id: string) => {
@@ -98,6 +99,7 @@ const ReviewEventsPage = () => {
 
   // If the user is not an admin, redirect them to the home page
   if (!isAdmin) {
+    console.log("User is not admin, redirecting to home page");
     return <Navigate to="/" />;
   }
 

@@ -50,14 +50,19 @@ const mockPendingEvents = [
 const ReviewEventsPage = () => {
   const [pendingEvents, setPendingEvents] = useState(mockPendingEvents);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   
   useEffect(() => {
     document.title = "Review Events | SponsorGO";
+    
     // Check if the current user is an admin
     const userIsAdmin = localStorage.getItem("isAdmin") === "true";
     console.log("ReviewEventsPage: Initial admin check:", userIsAdmin);
+    
+    // Set the admin status
     setIsAdmin(userIsAdmin);
+    setLoading(false);
     
     // Show access denied toast if not admin
     if (!userIsAdmin) {
@@ -67,7 +72,7 @@ const ReviewEventsPage = () => {
         variant: "destructive",
       });
     }
-    // In a real app, you would fetch pending events from your API here
+    
     console.log("ReviewEventsPage mounted, admin status:", userIsAdmin);
   }, [toast]);
 
@@ -89,6 +94,12 @@ const ReviewEventsPage = () => {
     });
   };
 
+  // Don't render anything while we're checking admin status
+  if (loading) {
+    console.log("Page is loading, checking admin status...");
+    return <div>Loading...</div>;
+  }
+  
   // If the user is not an admin, redirect them to the home page
   if (!isAdmin) {
     console.log("User is not admin, redirecting to home page");

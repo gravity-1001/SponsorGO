@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import {
   Table,
@@ -46,12 +47,24 @@ const mockPendingEvents = [
   },
 ];
 
+// In a real app with authentication, this would come from your auth system
+const getCurrentUser = () => {
+  // For demo purposes, let's just check if there's an admin flag in localStorage
+  // In a real app with proper authentication, this would be based on the user's authenticated status
+  return {
+    isAdmin: localStorage.getItem("isAdmin") === "true",
+  };
+};
+
 const ReviewEventsPage = () => {
   const [pendingEvents, setPendingEvents] = useState(mockPendingEvents);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
   
   useEffect(() => {
     document.title = "Review Events | SponsorGO";
+    // Check if the current user is an admin
+    setIsAdmin(getCurrentUser().isAdmin);
     // In a real app, you would fetch pending events from your API here
   }, []);
 
@@ -72,6 +85,16 @@ const ReviewEventsPage = () => {
       description: "The event has been rejected and won't be published.",
     });
   };
+
+  // If the user is not an admin, redirect them to the home page
+  if (!isAdmin) {
+    toast({
+      title: "Access Denied",
+      description: "You don't have permission to view this page.",
+      variant: "destructive",
+    });
+    return <Navigate to="/" />;
+  }
 
   return (
     <MainLayout>

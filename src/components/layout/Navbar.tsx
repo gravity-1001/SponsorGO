@@ -1,15 +1,17 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   
-  // In a real app, you would check if the user is an admin
-  // For now, we'll just hardcode this to true for demonstration
-  const isAdmin = true;
+  useEffect(() => {
+    // Check if the current user is an admin when the component mounts
+    setIsAdmin(localStorage.getItem("isAdmin") === "true");
+  }, []);
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">

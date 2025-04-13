@@ -33,6 +33,7 @@ const Navbar = () => {
             <Link to="/events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
               Search Events
             </Link>
+            {/* The Review Events link is only visible to admins - completely hidden from regular users */}
             {isAdmin && (
               <Link to="/review-events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
                 Review Events
@@ -91,6 +92,7 @@ const Navbar = () => {
             >
               Search Events
             </Link>
+            {/* The Review Events link is also hidden from the mobile menu for non-admins */}
             {isAdmin && (
               <Link
                 to="/review-events"

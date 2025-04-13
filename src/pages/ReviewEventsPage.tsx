@@ -64,9 +64,19 @@ const ReviewEventsPage = () => {
   useEffect(() => {
     document.title = "Review Events | SponsorGO";
     // Check if the current user is an admin
-    setIsAdmin(getCurrentUser().isAdmin);
+    const userIsAdmin = getCurrentUser().isAdmin;
+    setIsAdmin(userIsAdmin);
+    
+    // Show access denied toast if not admin
+    if (!userIsAdmin) {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to view this page.",
+        variant: "destructive",
+      });
+    }
     // In a real app, you would fetch pending events from your API here
-  }, []);
+  }, [toast]);
 
   const handleApprove = (id: string) => {
     // In a real app, you would call your API to approve the event
@@ -88,11 +98,6 @@ const ReviewEventsPage = () => {
 
   // If the user is not an admin, redirect them to the home page
   if (!isAdmin) {
-    toast({
-      title: "Access Denied",
-      description: "You don't have permission to view this page.",
-      variant: "destructive",
-    });
     return <Navigate to="/" />;
   }
 

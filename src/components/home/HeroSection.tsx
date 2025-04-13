@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, IndianRupee } from 'lucide-react';
@@ -41,15 +40,15 @@ const HeroSection = () => {
               <div className="flex justify-between items-end">
                 <div>
                   <span className="inline-block bg-sponsorgo-purple/10 text-sponsorgo-purple px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Hackathon
+                    Technical Symposium
                   </span>
-                  <h3 className="text-xl font-bold">TechFest 2025</h3>
-                  <p className="text-gray-500">Stanford University</p>
+                  <h3 className="text-xl font-bold">Algorithm 10.0</h3>
+                  <p className="text-gray-500">Kalsekar Technical Campus</p>
                 </div>
                 <div className="flex flex-col items-end">
                   <p className="font-bold text-sponsorgo-purple flex items-center">
                     <IndianRupee className="h-4 w-4 mr-1" />
-                    5,00,000
+                    {formatIndianCurrency(180000)}
                   </p>
                   <p className="text-sm text-gray-500">Sponsored</p>
                 </div>

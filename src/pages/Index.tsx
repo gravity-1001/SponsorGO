@@ -1,13 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import MainLayout from "@/components/layout/MainLayout";
+import HeroSection from "@/components/home/HeroSection";
+import FeaturedEvents from "@/components/home/FeaturedEvents";
+import HowItWorks from "@/components/home/HowItWorks";
+import Testimonials from "@/components/home/Testimonials";
+import CallToAction from "@/components/home/CallToAction";
+import Chatbot from "@/components/shared/Chatbot";
+import { useEffect } from "react";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "SponsorGO | Connect College Events with Sponsors";
+  }, []);
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <MainLayout>
+      <HeroSection />
+      <FeaturedEvents />
+      <HowItWorks />
+      <Testimonials />
+      <CallToAction />
+      <Chatbot />
+    </MainLayout>
   );
 };
 

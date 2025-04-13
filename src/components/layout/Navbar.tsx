@@ -6,6 +6,10 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // In a real app, you would check if the user is an admin
+  // For now, we'll just hardcode this to true for demonstration
+  const isAdmin = true;
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -27,6 +31,11 @@ const Navbar = () => {
             <Link to="/events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
               Search Events
             </Link>
+            {isAdmin && (
+              <Link to="/review-events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
+                Review Events
+              </Link>
+            )}
           </div>
           
           <div className="hidden md:flex items-center gap-3">
@@ -80,6 +89,15 @@ const Navbar = () => {
             >
               Search Events
             </Link>
+            {isAdmin && (
+              <Link
+                to="/review-events"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Review Events
+              </Link>
+            )}
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5 gap-2">

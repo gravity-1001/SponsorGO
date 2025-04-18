@@ -21,6 +21,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { formatIndianCurrency } from "@/lib/utils";
 
 // Mock data for an event
 const eventData = {
@@ -221,7 +222,7 @@ const EventDetail = () => {
                           {pkg.level}
                           <DollarSign className="h-5 w-5 text-sponsorgo-purple" />
                         </CardTitle>
-                        <CardDescription className="text-2xl font-bold">${pkg.price.toLocaleString()}</CardDescription>
+                        <CardDescription className="text-2xl font-bold">{formatIndianCurrency(pkg.price)}</CardDescription>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-2">
@@ -275,7 +276,7 @@ const EventDetail = () => {
             <div className="bg-white rounded-lg border p-6 sticky top-24">
               <div className="pb-6 mb-6 border-b">
                 <div className="text-2xl font-bold text-sponsorgo-purple mb-1">
-                  ${eventData.sponsorshipAmount.toLocaleString()}
+                  {formatIndianCurrency(eventData.sponsorshipAmount)}
                 </div>
                 <div className="text-sm text-gray-500 mb-6">Sponsorship starting at</div>
                 

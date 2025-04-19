@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { Calendar, MapPin, Users, Search, Filter, IndianRupee, Ticket } from "lucide-react";
 import { formatIndianCurrency } from "@/lib/utils";
 
-const events = [
+const mockEvents = [
   {
     id: 1,
     title: "Alegria 2025",
@@ -110,6 +109,38 @@ const EventsPage = () => {
   const [budgetRange, setBudgetRange] = useState([0, 2000000]);
   const [attendeeRange, setAttendeeRange] = useState([0, 100000]);
   const [mobileFiltersVisible, setMobileFiltersVisible] = useState(false);
+  const [events, setEvents] = useState(mockEvents);
+
+  useEffect(() => {
+    const publicEventsStr = localStorage.getItem("publicEvents");
+    
+    if (publicEventsStr) {
+      try {
+        const publicEvents = JSON.parse(publicEventsStr);
+        console.log("Found public events in localStorage:", publicEvents);
+        
+        if (publicEvents && publicEvents.length > 0) {
+          const mappedEvents = publicEvents.map(event => ({
+            id: event.id,
+            title: event.name,
+            category: "Cultural Festival",
+            university: event.organizer,
+            location: "Mumbai, Maharashtra",
+            date: event.date,
+            attendees: 5000,
+            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=90",
+            sponsorshipAmount: 250000,
+            description: `${event.name} is an exciting event organized by ${event.organizer}.`,
+            status: event.status
+          }));
+          
+          setEvents([...mappedEvents, ...mockEvents]);
+        }
+      } catch (error) {
+        console.error("Error parsing public events:", error);
+      }
+    }
+  }, []);
 
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

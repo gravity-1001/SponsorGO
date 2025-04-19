@@ -104,12 +104,35 @@ const ReviewEventsPage = () => {
   }, [toast]);
 
   const handleApprove = (id: string) => {
+    // Find the event to approve
+    const eventToApprove = pendingEvents.find(event => event.id === id);
+    if (!eventToApprove) return;
+
     // Remove the event from pending events
     const updatedEvents = pendingEvents.filter(event => event.id !== id);
     setPendingEvents(updatedEvents);
     
-    // Update local storage
+    // Update pending events in local storage
     localStorage.setItem("pendingEvents", JSON.stringify(updatedEvents));
+    
+    // Get existing public events from local storage
+    const publicEventsStr = localStorage.getItem("publicEvents");
+    let publicEvents = [];
+    
+    try {
+      if (publicEventsStr) {
+        publicEvents = JSON.parse(publicEventsStr);
+      }
+    } catch (error) {
+      console.error("Error parsing public events:", error);
+    }
+    
+    // Add the approved event to public events with status changed to "approved"
+    const approvedEvent = { ...eventToApprove, status: "approved" };
+    publicEvents.push(approvedEvent);
+    
+    // Save updated public events to local storage
+    localStorage.setItem("publicEvents", JSON.stringify(publicEvents));
     
     toast({
       title: "Event Approved",

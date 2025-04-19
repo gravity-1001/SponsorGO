@@ -16,7 +16,8 @@ import {
   Share2, 
   Heart, 
   HeartOff,
-  CheckCircle
+  CheckCircle,
+  Ticket
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -47,6 +48,10 @@ Sponsors will receive prominent branding throughout the event, including on the 
   venue: "Computer Science Building, Stanford University",
   website: "https://techhacks-stanford.edu",
   contactEmail: "organizers@techhacks-stanford.edu",
+  ticketPrice: 500,
+  ticketsAvailable: 200,
+  registrationDeadline: "May 1, 2025",
+  eventHighlights: ["Coding competitions", "Networking sessions", "Tech workshops", "Mentorship opportunities"],
   benefits: [
     "Logo placement on event website, t-shirts, and venue signage",
     "Opportunity to send mentors and judges",
@@ -84,12 +89,20 @@ const EventDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [viewMode, setViewMode] = useState<"student" | "sponsor">("student");
   const { toast } = useToast();
   
   const handleSponsorNow = () => {
     toast({
       title: "Sponsor request initiated",
       description: "This is a placeholder. Connect to Supabase to handle actual sponsorship flow.",
+    });
+  };
+
+  const handleRegisterNow = () => {
+    toast({
+      title: "Registration initiated",
+      description: "This is a placeholder. Connect to Supabase to handle actual registration flow.",
     });
   };
 
@@ -136,12 +149,22 @@ const EventDetail = () => {
               <Button variant="outline" className="flex items-center gap-2">
                 <Share2 size={16} /> Share
               </Button>
-              <Button 
-                className="bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark"
-                onClick={handleSponsorNow}
-              >
-                Sponsor Now
-              </Button>
+              <div className="flex items-center">
+                <Button 
+                  variant={viewMode === "student" ? "default" : "outline"}
+                  onClick={() => setViewMode("student")}
+                  className={viewMode === "student" ? "bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark rounded-r-none" : "rounded-r-none"}
+                >
+                  Student
+                </Button>
+                <Button 
+                  variant={viewMode === "sponsor" ? "default" : "outline"}
+                  onClick={() => setViewMode("sponsor")}
+                  className={viewMode === "sponsor" ? "bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark rounded-l-none" : "rounded-l-none"}
+                >
+                  Sponsor
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -178,7 +201,11 @@ const EventDetail = () => {
             <Tabs defaultValue="about">
               <TabsList className="w-full">
                 <TabsTrigger value="about" className="flex-1">About</TabsTrigger>
-                <TabsTrigger value="packages" className="flex-1">Sponsorship Packages</TabsTrigger>
+                {viewMode === "sponsor" ? (
+                  <TabsTrigger value="packages" className="flex-1">Sponsorship Packages</TabsTrigger>
+                ) : (
+                  <TabsTrigger value="highlights" className="flex-1">Event Highlights</TabsTrigger>
+                )}
                 <TabsTrigger value="venue" className="flex-1">Venue</TabsTrigger>
               </TabsList>
               
@@ -187,24 +214,47 @@ const EventDetail = () => {
                   <h3 className="text-2xl font-bold mb-4">Event Details</h3>
                   <p className="whitespace-pre-line mb-6">{eventData.description}</p>
                   
-                  <h4 className="text-xl font-semibold mt-8 mb-4">Sponsorship Benefits</h4>
-                  <ul className="space-y-2">
-                    {eventData.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <h4 className="text-xl font-semibold mt-8 mb-4">Previous Sponsors</h4>
-                  <div className="flex flex-wrap gap-4">
-                    {eventData.previousSponsors.map((sponsor, index) => (
-                      <div key={index} className="px-4 py-2 bg-gray-100 rounded-md">
-                        {sponsor}
+                  {viewMode === "sponsor" && (
+                    <>
+                      <h4 className="text-xl font-semibold mt-8 mb-4">Sponsorship Benefits</h4>
+                      <ul className="space-y-2">
+                        {eventData.benefits.map((benefit, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <h4 className="text-xl font-semibold mt-8 mb-4">Previous Sponsors</h4>
+                      <div className="flex flex-wrap gap-4">
+                        {eventData.previousSponsors.map((sponsor, index) => (
+                          <div key={index} className="px-4 py-2 bg-gray-100 rounded-md">
+                            {sponsor}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </>
+                  )}
+                  
+                  {viewMode === "student" && eventData.eventHighlights && (
+                    <>
+                      <h4 className="text-xl font-semibold mt-8 mb-4">Event Highlights</h4>
+                      <ul className="space-y-2">
+                        {eventData.eventHighlights.map((highlight, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="h-5 w-5 text-sponsorgo-purple flex-shrink-0 mt-0.5" />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <h4 className="text-xl font-semibold mt-8 mb-4">Registration Details</h4>
+                      <p>Registration Deadline: {eventData.registrationDeadline}</p>
+                      <p>Tickets Available: {eventData.ticketsAvailable}</p>
+                      <p>Ticket Price: {eventData.ticketPrice ? formatIndianCurrency(eventData.ticketPrice) : "Free"}</p>
+                    </>
+                  )}
                 </div>
               </TabsContent>
               
@@ -246,6 +296,70 @@ const EventDetail = () => {
                 </div>
               </TabsContent>
               
+              <TabsContent value="highlights" className="mt-6">
+                <div className="prose max-w-none">
+                  <h3 className="text-2xl font-bold mb-4">Event Highlights</h3>
+                  
+                  {eventData.eventHighlights && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      {eventData.eventHighlights.map((highlight, index) => (
+                        <Card key={index}>
+                          <CardContent className="p-6">
+                            <div className="flex gap-4 items-start">
+                              <div className="h-10 w-10 rounded-full bg-sponsorgo-purple-light/50 flex items-center justify-center text-sponsorgo-purple">
+                                {index + 1}
+                              </div>
+                              <div>
+                                <h4 className="font-medium text-lg">{highlight}</h4>
+                                <p className="text-gray-500 mt-1">
+                                  Join us for this exciting activity during {eventData.title}!
+                                </p>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <h3 className="text-2xl font-bold mb-4 mt-8">Registration Details</h3>
+                  <div className="bg-sponsorgo-purple-light/20 p-6 rounded-lg">
+                    <div className="flex flex-col md:flex-row justify-between gap-6">
+                      <div>
+                        <h4 className="font-semibold mb-2">Registration Deadline</h4>
+                        <p className="flex items-center gap-2 text-lg">
+                          <Calendar className="h-5 w-5 text-sponsorgo-purple" />
+                          {eventData.registrationDeadline}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold mb-2">Tickets Available</h4>
+                        <p className="flex items-center gap-2 text-lg">
+                          <Ticket className="h-5 w-5 text-sponsorgo-purple" />
+                          {eventData.ticketsAvailable}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold mb-2">Ticket Price</h4>
+                        <p className="flex items-center gap-2 text-lg font-bold text-sponsorgo-purple">
+                          <DollarSign className="h-5 w-5" />
+                          {eventData.ticketPrice ? formatIndianCurrency(eventData.ticketPrice) : "Free"}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      className="w-full mt-6 bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark"
+                      onClick={handleRegisterNow}
+                    >
+                      Register Now
+                    </Button>
+                  </div>
+                </div>
+              </TabsContent>
+              
               <TabsContent value="venue" className="mt-6">
                 <div className="prose max-w-none">
                   <h3 className="text-2xl font-bold mb-4">Venue Information</h3>
@@ -274,22 +388,49 @@ const EventDetail = () => {
           
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg border p-6 sticky top-24">
-              <div className="pb-6 mb-6 border-b">
-                <div className="text-2xl font-bold text-sponsorgo-purple mb-1">
-                  {formatIndianCurrency(eventData.sponsorshipAmount)}
-                </div>
-                <div className="text-sm text-gray-500 mb-6">Sponsorship starting at</div>
-                
-                <Button 
-                  className="w-full bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark mb-3"
-                  onClick={handleSponsorNow}
-                >
-                  Sponsor Now
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Contact Organizer
-                </Button>
-              </div>
+              {viewMode === "sponsor" ? (
+                <>
+                  <div className="pb-6 mb-6 border-b">
+                    <div className="text-2xl font-bold text-sponsorgo-purple mb-1">
+                      {formatIndianCurrency(eventData.sponsorshipAmount)}
+                    </div>
+                    <div className="text-sm text-gray-500 mb-6">Sponsorship starting at</div>
+                    
+                    <Button 
+                      className="w-full bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark mb-3"
+                      onClick={handleSponsorNow}
+                    >
+                      Sponsor Now
+                    </Button>
+                    <Button variant="outline" className="w-full">
+                      Contact Organizer
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="pb-6 mb-6 border-b">
+                    <div className="text-2xl font-bold text-sponsorgo-purple mb-1">
+                      {eventData.ticketPrice ? formatIndianCurrency(eventData.ticketPrice) : "Free Entry"}
+                    </div>
+                    <div className="text-sm text-gray-500 mb-2">Per ticket</div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+                      <Ticket className="h-4 w-4 text-sponsorgo-purple" /> 
+                      <span>{eventData.ticketsAvailable} tickets remaining</span>
+                    </div>
+                    
+                    <Button 
+                      className="w-full bg-sponsorgo-purple hover:bg-sponsorgo-purple-dark mb-3"
+                      onClick={handleRegisterNow}
+                    >
+                      Register Now
+                    </Button>
+                    <Button variant="outline" className="w-full">
+                      Contact Organizer
+                    </Button>
+                  </div>
+                </>
+              )}
               
               <h3 className="font-semibold text-lg mb-4">Event Information</h3>
               

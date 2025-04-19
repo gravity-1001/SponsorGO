@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -392,7 +393,7 @@ const EventsPage = () => {
                         <div className="text-right">
                           <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
                             <Ticket className="h-4 w-4 mr-1" />
-                            {formatIndianCurrency(event.ticketPrice)}
+                            {event.ticketPrice ? formatIndianCurrency(event.ticketPrice) : "Free"}
                           </span>
                           <span className="text-xs text-gray-500">Entry Fee</span>
                         </div>
@@ -413,24 +414,26 @@ const EventsPage = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4 text-sponsorgo-purple" />
-                          <span>{event.ticketsAvailable} Tickets Available</span>
+                          <span>{event.ticketsAvailable ? `${event.ticketsAvailable} Tickets Available` : `${event.attendees} Expected Attendees`}</span>
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-4 border-t">
-                        <div className="flex flex-wrap gap-2">
-                          {event.eventHighlights.slice(0, 2).map((highlight, index) => (
-                            <Badge key={index} variant="outline" className="bg-gray-50">
-                              {highlight}
-                            </Badge>
-                          ))}
-                          {event.eventHighlights.length > 2 && (
-                            <Badge variant="outline" className="bg-gray-50">
-                              +{event.eventHighlights.length - 2} more
-                            </Badge>
-                          )}
+                      {event.eventHighlights && (
+                        <div className="mt-4 pt-4 border-t">
+                          <div className="flex flex-wrap gap-2">
+                            {event.eventHighlights.slice(0, 2).map((highlight, index) => (
+                              <Badge key={index} variant="outline" className="bg-gray-50">
+                                {highlight}
+                              </Badge>
+                            ))}
+                            {event.eventHighlights.length > 2 && (
+                              <Badge variant="outline" className="bg-gray-50">
+                                +{event.eventHighlights.length - 2} more
+                              </Badge>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </CardContent>
                   </Card>
                 </Link>

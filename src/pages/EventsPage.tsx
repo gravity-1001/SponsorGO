@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Calendar, MapPin, Users, Search, Filter, IndianRupee } from "lucide-react";
+import { Calendar, MapPin, Users, Search, Filter, IndianRupee, Ticket } from "lucide-react";
+import { formatIndianCurrency } from "@/lib/utils";
 
 const events = [
   {
@@ -21,7 +22,11 @@ const events = [
     attendees: 5000,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop&q=90",
     sponsorshipAmount: 250000,
-    description: "Alegria is the annual cultural festival of Pillai HOC College of Engineering. Join us for three days of music, dance, art and technology competitions with participation from colleges across India."
+    description: "Alegria is the annual cultural festival of Pillai HOC College of Engineering. Join us for three days of music, dance, art and technology competitions with participation from colleges across India.",
+    ticketPrice: 500,
+    ticketsAvailable: 2000,
+    registrationDeadline: "March 10, 2025",
+    eventHighlights: ["Live performances", "Technical workshops", "Cultural competitions", "Gaming tournaments"]
   },
   {
     id: 2,
@@ -33,7 +38,11 @@ const events = [
     attendees: 3000,
     image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&auto=format&fit=crop&q=90",
     sponsorshipAmount: 180000,
-    description: "A national level technical symposium featuring coding competitions, paper presentations, robotics workshops and industry expert talks. Great opportunity to connect with engineering talent."
+    description: "A national level technical symposium featuring coding competitions, paper presentations, robotics workshops and industry expert talks. Great opportunity to connect with engineering talent.",
+    ticketPrice: 750,
+    ticketsAvailable: 1000,
+    registrationDeadline: "April 15, 2025",
+    eventHighlights: ["Coding competitions", "Robotics workshop", "Paper presentations", "Industry expert talks"]
   },
   {
     id: 3,
@@ -127,9 +136,9 @@ const EventsPage = () => {
       <div className="bg-gradient-to-b from-sponsorgo-purple-light/30 to-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold mb-4">Find College Events to Sponsor</h1>
+            <h1 className="text-4xl font-bold mb-4">Discover Amazing College Events</h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Discover top college events across India that align with your brand and connect with the next generation of professionals.
+              Find and participate in exciting college events, competitions, and festivals across India. Register early to secure your spot!
             </p>
           </div>
           
@@ -382,10 +391,10 @@ const EventsPage = () => {
                         </Badge>
                         <div className="text-right">
                           <span className="block text-sponsorgo-purple font-bold flex items-center justify-end">
-                            <IndianRupee className="h-4 w-4 mr-1" />
-                            {event.sponsorshipAmount.toLocaleString('en-IN')}
+                            <Ticket className="h-4 w-4 mr-1" />
+                            {formatIndianCurrency(event.ticketPrice)}
                           </span>
-                          <span className="text-xs text-gray-500">Sponsorship</span>
+                          <span className="text-xs text-gray-500">Entry Fee</span>
                         </div>
                       </div>
                       <h3 className="text-xl font-bold mb-2">{event.title}</h3>
@@ -404,7 +413,22 @@ const EventsPage = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4 text-sponsorgo-purple" />
-                          <span>{event.attendees.toLocaleString('en-IN')} Expected Attendees</span>
+                          <span>{event.ticketsAvailable} Tickets Available</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t">
+                        <div className="flex flex-wrap gap-2">
+                          {event.eventHighlights.slice(0, 2).map((highlight, index) => (
+                            <Badge key={index} variant="outline" className="bg-gray-50">
+                              {highlight}
+                            </Badge>
+                          ))}
+                          {event.eventHighlights.length > 2 && (
+                            <Badge variant="outline" className="bg-gray-50">
+                              +{event.eventHighlights.length - 2} more
+                            </Badge>
+                          )}
                         </div>
                       </div>
                     </CardContent>

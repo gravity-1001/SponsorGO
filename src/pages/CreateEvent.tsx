@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn, formatIndianCurrency } from "@/lib/utils";
-import { Calendar as CalendarIcon, Upload, Info, Plus, Trash2, ArrowRight, DollarSign } from "lucide-react";
+import { Calendar as CalendarIcon, Upload, Info, Plus, Trash2, ArrowRight, DollarSign, IndianRupee } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -379,7 +379,7 @@ const CreateEvent = () => {
                     <Label htmlFor="sponsorshipGoal">Sponsorship Goal *</Label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
-                        <DollarSign className="h-5 w-5" />
+                        <IndianRupee className="h-5 w-5" />
                       </span>
                       <Input 
                         id="sponsorshipGoal" 
@@ -408,7 +408,7 @@ const CreateEvent = () => {
                       <CardHeader className="py-4">
                         <div className="flex justify-between items-center">
                           <CardTitle className="text-lg">Gold Sponsor Package</CardTitle>
-                          <div className="text-sponsorgo-purple font-bold">$5,000+</div>
+                          <div className="text-sponsorgo-purple font-bold">₹5,000+</div>
                         </div>
                       </CardHeader>
                       <CardContent className="py-4">
@@ -434,7 +434,7 @@ const CreateEvent = () => {
                       <CardHeader className="py-4">
                         <div className="flex justify-between items-center">
                           <CardTitle className="text-lg">Silver Sponsor Package</CardTitle>
-                          <div className="text-sponsorgo-purple font-bold">$2,500+</div>
+                          <div className="text-sponsorgo-purple font-bold">₹2,500+</div>
                         </div>
                       </CardHeader>
                       <CardContent className="py-4">
@@ -459,7 +459,7 @@ const CreateEvent = () => {
                       <CardHeader className="py-4">
                         <div className="flex justify-between items-center">
                           <CardTitle className="text-lg">Bronze Sponsor Package</CardTitle>
-                          <div className="text-sponsorgo-purple font-bold">$1,000+</div>
+                          <div className="text-sponsorgo-purple font-bold">₹1,000+</div>
                         </div>
                       </CardHeader>
                       <CardContent className="py-4">
@@ -611,14 +611,14 @@ const CreateEvent = () => {
                       <dl className="space-y-4">
                         <div className="flex flex-col sm:flex-row sm:gap-2">
                           <dt className="font-medium text-gray-500 sm:min-w-[180px]">Sponsorship Goal:</dt>
-                          <dd>$10,000</dd>
+                          <dd>₹10,000</dd>
                         </div>
                         
                         <div className="flex flex-col sm:flex-row sm:gap-2">
                           <dt className="font-medium text-gray-500 sm:min-w-[180px] shrink-0">Packages:</dt>
                           <dd className="space-y-2">
                             <div>
-                              <div className="font-medium">Gold: $5,000+</div>
+                              <div className="font-medium">Gold: ₹5,000+</div>
                               <ul className="text-sm text-gray-700 list-disc pl-5 space-y-1">
                                 <li>Prime logo placement on event materials and website</li>
                                 <li>Keynote speaking opportunity</li>
@@ -629,7 +629,7 @@ const CreateEvent = () => {
                               </ul>
                             </div>
                             <div>
-                              <div className="font-medium">Silver: $2,500+</div>
+                              <div className="font-medium">Silver: ₹2,500+</div>
                               <ul className="text-sm text-gray-700 list-disc pl-5 space-y-1">
                                 <li>Logo on event materials and website</li>
                                 <li>Send mentors and judges</li>
@@ -639,7 +639,7 @@ const CreateEvent = () => {
                               </ul>
                             </div>
                             <div>
-                              <div className="font-medium">Bronze: $1,000+</div>
+                              <div className="font-medium">Bronze: ₹1,000+</div>
                               <ul className="text-sm text-gray-700 list-disc pl-5 space-y-1">
                                 <li>Logo on event website</li>
                                 <li>Send mentors</li>
@@ -704,7 +704,5 @@ const CreateEvent = () => {
     </MainLayout>
   );
 };
-
-import { DollarSign } from "lucide-react";
 
 export default CreateEvent;

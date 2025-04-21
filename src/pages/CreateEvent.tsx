@@ -13,8 +13,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon, Upload, Info, Plus, Trash2, ArrowRight } from "lucide-react";
+import { cn, formatIndianCurrency } from "@/lib/utils";
+import { Calendar as CalendarIcon, Upload, Info, Plus, Trash2, ArrowRight, DollarSign } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 

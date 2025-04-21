@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import {
   Table,
@@ -18,7 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle, Eye, IndianRupee } from "lucide-react";
+import { CheckCircle, XCircle, Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 
@@ -33,19 +32,11 @@ interface Event {
 
 const ReviewEventsPage = () => {
   const [pendingEvents, setPendingEvents] = useState<Event[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   
   useEffect(() => {
     document.title = "Review Events | SponsorGO";
-    
-    // Check if the current user is an admin
-    const userIsAdmin = localStorage.getItem("isAdmin") === "true";
-    console.log("ReviewEventsPage: Initial admin check:", userIsAdmin);
-    
-    // Set the admin status
-    setIsAdmin(userIsAdmin);
     
     // Get submitted events from local storage
     const storedEvents = localStorage.getItem("pendingEvents");
@@ -90,18 +81,7 @@ const ReviewEventsPage = () => {
     
     setPendingEvents(eventsArray);
     setLoading(false);
-    
-    // Show access denied toast if not admin
-    if (!userIsAdmin) {
-      toast({
-        title: "Access Denied",
-        description: "You don't have permission to view this page.",
-        variant: "destructive",
-      });
-    }
-    
-    console.log("ReviewEventsPage mounted, admin status:", userIsAdmin);
-  }, [toast]);
+  }, []);
 
   const handleApprove = (id: string) => {
     // Find the event to approve
@@ -154,19 +134,11 @@ const ReviewEventsPage = () => {
     });
   };
 
-  // Don't render anything while we're checking admin status
+  // Don't render anything while we're loading
   if (loading) {
-    console.log("Page is loading, checking admin status...");
     return <div>Loading...</div>;
   }
-  
-  // If the user is not an admin, redirect them to the home page
-  if (!isAdmin) {
-    console.log("User is not admin, redirecting to home page");
-    return <Navigate to="/" replace />;
-  }
 
-  console.log("Rendering ReviewEventsPage content for admin user");
   return (
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -239,3 +211,4 @@ const ReviewEventsPage = () => {
 };
 
 export default ReviewEventsPage;
+

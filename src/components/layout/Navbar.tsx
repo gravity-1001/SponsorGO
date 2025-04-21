@@ -16,17 +16,13 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   
   useEffect(() => {
-    // Check if the current user is an admin when the component mounts
-    // and again whenever localStorage changes
     const checkAdminStatus = () => {
       setIsAdmin(localStorage.getItem("isAdmin") === "true");
       console.log("Admin status checked:", localStorage.getItem("isAdmin") === "true");
     };
     
-    // Initial check
     checkAdminStatus();
     
-    // Listen for storage events (in case admin status changes in another tab)
     window.addEventListener('storage', checkAdminStatus);
     
     return () => {
@@ -34,7 +30,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Add this for debugging - you can call this from your browser console with setAdminMode(true)
   if (typeof window !== 'undefined') {
     window.setAdminMode = (isAdmin) => {
       localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
@@ -63,12 +58,10 @@ const Navbar = () => {
             <Link to="/events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
               Search Events
             </Link>
-            {/* The Review Events link is only visible to admins - completely hidden from regular users */}
-            {isAdmin && (
-              <Link to="/review-events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
-                Review Events
-              </Link>
-            )}
+            {/* Review Events is now always visible */}
+            <Link to="/review-events" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50">
+              Review Events
+            </Link>
           </div>
           
           <div className="hidden md:flex items-center gap-3">
@@ -122,16 +115,14 @@ const Navbar = () => {
             >
               Search Events
             </Link>
-            {/* The Review Events link is also hidden from the mobile menu for non-admins */}
-            {isAdmin && (
-              <Link
-                to="/review-events"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Review Events
-              </Link>
-            )}
+            {/* Review Events is now always visible on mobile menu */}
+            <Link
+              to="/review-events"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sponsorgo-purple hover:bg-gray-50"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Review Events
+            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5 gap-2">
@@ -152,3 +143,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
